@@ -1,6 +1,7 @@
 package cheapcash_test
 
 import (
+	"errors"
 	"math/rand"
 	"strconv"
 	"sync"
@@ -56,4 +57,18 @@ func TestRead_Concurrency(t *testing.T) {
 	go readFunc()
 
 	wg.Wait()
+}
+
+func TestRead_NotExists(t *testing.T) {
+	rand := strconv.Itoa(rand.Int())
+	c := cheapcash.Default()
+
+	_, err := c.Read(rand)
+	if err == nil {
+		t.Error("expected an error, got nil")
+	}
+
+	if !errors.Is(err, cheapcash.ErrNotExists) {
+		t.Errorf("expected %v, got %v", cheapcash.ErrNotExists, err)
+	}
 }

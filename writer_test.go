@@ -1,6 +1,8 @@
 package cheapcash_test
 
 import (
+	"math/rand"
+	"strconv"
 	"sync"
 	"testing"
 
@@ -36,4 +38,19 @@ func TestWrite_Concurrency(t *testing.T) {
 	go writeFunc()
 
 	wg.Wait()
+}
+
+func TestWrite_Exists(t *testing.T) {
+	rand := strconv.Itoa(rand.Int())
+	c := cheapcash.Default()
+
+	err := c.Write(rand, []byte("value"))
+	if err != nil {
+		t.Error("an error was thrown:", err)
+	}
+
+	err = c.Write(rand, []byte("another value"))
+	if err != nil {
+		t.Error("an error was thrown:", err)
+	}
 }
