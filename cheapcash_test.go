@@ -24,8 +24,8 @@ func TestDefault(t *testing.T) {
 
 func TestNew(t *testing.T) {
 	c := cheapcash.New("/somewhere")
-	if c.Path != "/somewhere" {
-		t.Error("expected path to return /somewhere, got:", c.Path)
+	if c.Path != "/somewhere/" {
+		t.Error("expected path to return /somewhere/, got:", c.Path)
 	}
 }
 

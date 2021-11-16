@@ -8,7 +8,7 @@ func (c *Cache) Write(key string, value []byte) error {
 		return err
 	}
 
-	check, err := c.Exists(key)
+	check, err := c.Exists(c.Path + key)
 	if err != nil {
 		return err
 	}

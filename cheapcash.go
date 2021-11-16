@@ -2,6 +2,7 @@ package cheapcash
 
 import (
 	"errors"
+	"strings"
 
 	"sync"
 )
@@ -22,6 +23,10 @@ func Default() *Cache {
 }
 
 func New(path string) *Cache {
+	if !strings.HasSuffix(path, "/") {
+		path += "/"
+	}
+
 	return &Cache{
 		Path: path,
 	}
