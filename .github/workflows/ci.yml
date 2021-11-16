@@ -1,0 +1,23 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-go@v2
+        with:
+          go-version: 1.17.x
+      - name: Go vet
+        run: go vet -v
+      - name: Go test
+        run: go test -v -race -coverprofile=coverage.out -covermode=atomic -failfast
+      - uses: github/codeql-action/init@v1
+        with:
+          languages: go
+      - uses: github/codeql-action/analyze@v1
+      - uses: codecov/codecov-action@v1
