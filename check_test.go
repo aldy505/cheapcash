@@ -35,7 +35,7 @@ func TestExists(t *testing.T) {
 	}
 }
 
-func TestExists_Conccurency(t *testing.T) {
+func TestExists_Concurrency(t *testing.T) {
 	rand := strconv.Itoa(rand.Int())
 	c := cheapcash.Default()
 

@@ -24,7 +24,7 @@ func TestDelete(t *testing.T) {
 	}
 }
 
-func TestDelete_Conccurency(t *testing.T) {
+func TestDelete_Concurrency(t *testing.T) {
 	rand := strconv.Itoa(rand.Int())
 	c := cheapcash.Default()
 	err := c.Write(rand, []byte("value"))

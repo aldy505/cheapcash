@@ -3,7 +3,7 @@ package cheapcash
 import "os"
 
 func (c *Cache) Delete(key string) error {
-  check, err := c.Exists(c.Path + "/" + key)
+	check, err := c.Exists(c.Path + "/" + key)
 	if err != nil {
 		return err
 	}

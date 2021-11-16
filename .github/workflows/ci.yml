@@ -15,7 +15,7 @@ jobs:
       - name: Go vet
         run: go vet -v
       - name: Go test
-        run: go test -v -race -coverprofile=coverage.out -covermode=atomic -failfast
+        run: go test -v -coverprofile=coverage.out -covermode=atomic -failfast
       - uses: github/codeql-action/init@v1
         with:
           languages: go

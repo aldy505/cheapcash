@@ -15,25 +15,25 @@ func TestWrite(t *testing.T) {
 	}
 }
 
-func TestWrite_Conccurency(t *testing.T) {
+func TestWrite_Concurrency(t *testing.T) {
 	c := cheapcash.Default()
 
-  var wg sync.WaitGroup
+	var wg sync.WaitGroup
 
-  writeFunc := func() {
+	writeFunc := func() {
 		err := c.Write("key1", []byte("value1"))
 		if err != nil {
 			t.Error("an error was thrown:", err)
 		}
-    wg.Done()
+		wg.Done()
 	}
 
 	wg.Add(5)
-  go writeFunc()
-  go writeFunc()
-  go writeFunc()
-  go writeFunc()
-  go writeFunc()
+	go writeFunc()
+	go writeFunc()
+	go writeFunc()
+	go writeFunc()
+	go writeFunc()
 
-  wg.Wait()
+	wg.Wait()
 }

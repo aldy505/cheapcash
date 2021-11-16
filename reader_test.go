@@ -26,7 +26,7 @@ func TestRead(t *testing.T) {
 	}
 }
 
-func TestRead_Conccurency(t *testing.T) {
+func TestRead_Concurrency(t *testing.T) {
 	rand := strconv.Itoa(rand.Int())
 	c := cheapcash.Default()
 
@@ -37,7 +37,7 @@ func TestRead_Conccurency(t *testing.T) {
 
 	var wg sync.WaitGroup
 
-	readFunc := func(){
+	readFunc := func() {
 		r, err := c.Read(rand)
 		if err != nil {
 			t.Error("an error was thrown:", err)
