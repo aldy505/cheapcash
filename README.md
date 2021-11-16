@@ -46,7 +46,12 @@ func main() {
 
   err = cache.Append("users:list", []byte("\nMarcel"))
   if err != nil {
-
+    log.Fatal(err)
   }
 
+  err = cache.Delete("users:list")
+  if err != nil {
+    log.Fatal(err)
+  }
 }
+```
