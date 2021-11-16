@@ -11,23 +11,23 @@ import (
 )
 
 func TestDelete(t *testing.T) {
-	rand := strconv.Itoa(rand.Int())
+	randomValue := strconv.Itoa(rand.Int())
 	c := cheapcash.Default()
-	err := c.Write(rand, []byte("value"))
+	err := c.Write(randomValue, []byte("value"))
 	if err != nil {
 		t.Error("an error was thrown:", err)
 	}
 
-	err = c.Delete(rand)
+	err = c.Delete(randomValue)
 	if err != nil {
 		t.Error("an error was thrown:", err)
 	}
 }
 
 func TestDelete_Concurrency(t *testing.T) {
-	rand := strconv.Itoa(rand.Int())
+	randomValue := strconv.Itoa(rand.Int())
 	c := cheapcash.Default()
-	err := c.Write(rand, []byte("value"))
+	err := c.Write(randomValue, []byte("value"))
 	if err != nil {
 		t.Error("an error was thrown:", err)
 	}
@@ -35,7 +35,7 @@ func TestDelete_Concurrency(t *testing.T) {
 	var wg sync.WaitGroup
 
 	deleteFunc := func() {
-		err = c.Delete(rand)
+		err = c.Delete(randomValue)
 		if err != nil && !errors.Is(err, cheapcash.ErrNotExists) {
 			t.Error("an error was thrown:", err)
 		}

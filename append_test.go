@@ -10,20 +10,20 @@ import (
 )
 
 func TestAppend(t *testing.T) {
-	rand := strconv.Itoa(rand.Int())
+	randomValue := strconv.Itoa(rand.Int())
 	c := cheapcash.Default()
 
-	err := c.Write(rand, []byte("Hello"))
+	err := c.Write(randomValue, []byte("Hello"))
 	if err != nil {
 		t.Error("an error was thrown:", err)
 	}
 
-	err = c.Append(rand, []byte("World"))
+	err = c.Append(randomValue, []byte("World"))
 	if err != nil {
 		t.Error("an error was thrown:", err)
 	}
 
-	r, err := c.Read(rand)
+	r, err := c.Read(randomValue)
 	if err != nil {
 		t.Error("an error was thrown:", err)
 	}
@@ -34,10 +34,10 @@ func TestAppend(t *testing.T) {
 }
 
 func TestAppend_NotExists(t *testing.T) {
-	rand := strconv.Itoa(rand.Int())
+	randomValue := strconv.Itoa(rand.Int())
 	c := cheapcash.Default()
 
-	err := c.Append(rand, []byte("Hello"))
+	err := c.Append(randomValue, []byte("Hello"))
 	if err == nil {
 		t.Error("expected an error, got nil")
 	}

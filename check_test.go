@@ -3,15 +3,16 @@ package cheapcash_test
 import (
 	"math/rand"
 	"strconv"
+	"sync"
 	"testing"
 
 	"github.com/aldy505/cheapcash"
 )
 
 func TestExists(t *testing.T) {
-	rand := strconv.Itoa(rand.Int())
+	randomValue := strconv.Itoa(rand.Int())
 	c := cheapcash.Default()
-	b, err := c.Exists(c.Path + "/" + rand)
+	b, err := c.Exists(c.Path + "/" + randomValue)
 	if err != nil {
 		t.Error("an error was thrown:", err)
 	}
@@ -20,12 +21,12 @@ func TestExists(t *testing.T) {
 		t.Error("expected false, got true")
 	}
 
-	err = c.Write(rand, []byte("value"))
+	err = c.Write(randomValue, []byte("value"))
 	if err != nil {
 		t.Error("an error was thrown:", err)
 	}
 
-	b, err = c.Exists(c.Path + "/" + rand)
+	b, err = c.Exists(c.Path + "/" + randomValue)
 	if err != nil {
 		t.Error("an error was thrown:", err)
 	}
@@ -36,80 +37,28 @@ func TestExists(t *testing.T) {
 }
 
 func TestExists_Concurrency(t *testing.T) {
-	rand := strconv.Itoa(rand.Int())
+	randomValue := strconv.Itoa(rand.Int())
 	c := cheapcash.Default()
 
-	res := make(chan bool, 5)
+	var wg sync.WaitGroup
 
-	go func() {
-		b, err := c.Exists(c.Path + "/" + rand)
+	existsFunc := func() {
+		b, err := c.Exists(c.Path + "/" + randomValue)
 		if err != nil {
 			t.Error("an error was thrown:", err)
 		}
 		if b == true {
 			t.Error("expected false, got true")
 		}
-		res <- true
-	}()
+		wg.Done()
+	}
 
-	go func() {
-		b, err := c.Exists(c.Path + "/" + rand)
-		if err != nil {
-			t.Error("an error was thrown:", err)
-		}
-		if b == true {
-			t.Error("expected false, got true")
-		}
-		res <- true
-	}()
+	wg.Add(5)
+	go existsFunc()
+	go existsFunc()
+	go existsFunc()
+	go existsFunc()
+	go existsFunc()
 
-	go func() {
-		b, err := c.Exists(c.Path + "/" + rand)
-		if err != nil {
-			t.Error("an error was thrown:", err)
-		}
-		if b == true {
-			t.Error("expected false, got true")
-		}
-		res <- true
-	}()
-
-	go func() {
-		b, err := c.Exists(c.Path + "/" + rand)
-		if err != nil {
-			t.Error("an error was thrown:", err)
-		}
-		if b == true {
-			t.Error("expected false, got true")
-		}
-		res <- true
-	}()
-
-	go func() {
-		b, err := c.Exists(c.Path + "/" + rand)
-		if err != nil {
-			t.Error("an error was thrown:", err)
-		}
-		if b == true {
-			t.Error("expected false, got true")
-		}
-		res <- true
-	}()
-
-	go func() {
-		b, err := c.Exists(c.Path + "/" + rand)
-		if err != nil {
-			t.Error("an error was thrown:", err)
-		}
-		if b == true {
-			t.Error("expected false, got true")
-		}
-		res <- true
-	}()
-
-	<-res
-	<-res
-	<-res
-	<-res
-	<-res
+	wg.Wait()
 }
