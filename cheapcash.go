@@ -15,6 +15,7 @@ type Cache struct {
 var ErrNotExists = errors.New("key does not exist")
 var ErrInvalidPath = errors.New("path supplied is invalid")
 var ErrDiskFull = errors.New("there was no space left on the device")
+var ErrExists = errors.New("key already exists")
 
 func Default() *Cache {
 	return &Cache{

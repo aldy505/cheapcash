@@ -11,14 +11,14 @@ import (
 )
 
 func TestRead(t *testing.T) {
-	rand := strconv.Itoa(rand.Int())
+	randomValue := strconv.Itoa(rand.Int())
 	c := cheapcash.Default()
-	err := c.Write(rand, []byte("value"))
+	err := c.Write(randomValue, []byte("value"))
 	if err != nil {
 		t.Error("an error was thrown:", err)
 	}
 
-	v, err := c.Read(rand)
+	v, err := c.Read(randomValue)
 	if err != nil {
 		t.Error("an error was thrown:", err)
 	}
@@ -28,10 +28,10 @@ func TestRead(t *testing.T) {
 }
 
 func TestRead_Concurrency(t *testing.T) {
-	rand := strconv.Itoa(rand.Int())
+	randomValue := strconv.Itoa(rand.Int())
 	c := cheapcash.Default()
 
-	err := c.Write(rand, []byte("value"))
+	err := c.Write(randomValue, []byte("value"))
 	if err != nil {
 		t.Error("an error was thrown:", err)
 	}
@@ -39,7 +39,7 @@ func TestRead_Concurrency(t *testing.T) {
 	var wg sync.WaitGroup
 
 	readFunc := func() {
-		r, err := c.Read(rand)
+		r, err := c.Read(randomValue)
 		if err != nil {
 			t.Error("an error was thrown:", err)
 		}
@@ -60,10 +60,10 @@ func TestRead_Concurrency(t *testing.T) {
 }
 
 func TestRead_NotExists(t *testing.T) {
-	rand := strconv.Itoa(rand.Int())
+	randomValue := strconv.Itoa(rand.Int())
 	c := cheapcash.Default()
 
-	_, err := c.Read(rand)
+	_, err := c.Read(randomValue)
 	if err == nil {
 		t.Error("expected an error, got nil")
 	}
