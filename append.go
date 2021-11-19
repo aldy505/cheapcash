@@ -2,6 +2,19 @@ package cheapcash
 
 import "os"
 
+// Directly append a value into an existing key.
+// If a key doesn't exists, it will return an error
+// with a type of ErrNotExists.
+//
+//      c := cheapcash.Default()
+//      err := c.Append("users", []byte("Someone\n"))
+//      if err != nil {
+//        if errors.Is(err, cheapcash.ErrNotExists) {
+//          // Handle if file does not exists!
+//        }
+//        // Handle any other errors
+//      }
+//
 func (c *Cache) Append(key string, value []byte) error {
 	check, err := c.Exists(c.Path + key)
 	if err != nil {

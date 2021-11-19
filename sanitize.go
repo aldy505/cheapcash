@@ -7,6 +7,9 @@ type restriction struct {
 	ReplaceWith string
 }
 
+// Sanitize path that is a valid string when the user
+// submitted it, but it's invalid when it's written
+// as a file name on local filesystem.
 func sanitizePath(path string) string {
 	restricted := []restriction{
 		{Key: " ", ReplaceWith: "_s_"},
