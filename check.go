@@ -31,6 +31,13 @@ func (c *Cache) Exists(key string) (bool, error) {
 	return true, nil
 }
 
+// Will validate the existance of a directory.
+// If the directory (including its' children) doesn't
+// exists, it will create the corresponding directory
+// tree from the given directory path.
+//
+// If the directory already exists, it will return
+// a nil value.
 func checkDir(path string) error {
 	// Remove / from path
 	path = strings.TrimSuffix(path, "/")

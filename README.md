@@ -4,6 +4,12 @@
 
 SSD is cheap. Why don't we use it for caching?
 
+A simple library implementing filesystem I/O as a cache. Should be must useful when used again a Solid State Drive
+for maximum speed and to handle good amount of concurrent read/write.
+
+The API itself is also pretty simple considering I don't want this to be a full-blown caching library like Redis,
+I just want it to be simple like Bigcache or similar caching library.
+
 ## Install
 
 ```go
@@ -55,3 +61,9 @@ func main() {
   }
 }
 ```
+
+See Godoc documentation (link above, beneath the title) for more complete documentation of the package.
+
+## License
+
+[MIT](./LICENSE)
