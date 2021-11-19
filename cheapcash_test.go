@@ -1,6 +1,7 @@
 package cheapcash_test
 
 import (
+	"errors"
 	"log"
 	"os"
 	"testing"
@@ -27,6 +28,19 @@ func TestNew(t *testing.T) {
 	if c.Path != "/somewhere/" {
 		t.Error("expected path to return /somewhere/, got:", c.Path)
 	}
+}
+
+func TestNew_InvalidPath(t *testing.T) {
+	defer func(){
+		if e := recover().(error); e != nil {
+			if !errors.Is(e, cheapcash.ErrInvalidPath) {
+				t.Error("expected ErrInvalidPath, got:", e)
+			}
+		}
+	}()
+
+	_ = cheapcash.New("")
+
 }
 
 func removeDirIfExists(path string) {
